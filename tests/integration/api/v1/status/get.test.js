@@ -4,16 +4,16 @@ beforeAll(async () => {
   await orchestrator.waitForAllServices();
 });
 
-describe("GET /api/v1/migrations", () => {
+describe("GET /api/v1/status", () => {
   describe("Anonymous user", () => {
-    test("Retrieving pending migrations", async () => {
+    test("Retrieving current system status", async () => {
       const response = await fetch("http://localhost:3000/api/v1/status");
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
 
-      const parsedUpadetAt = new Date(responseBody.updated_at).toISOString();
-      expect(responseBody.updated_at).toEqual(parsedUpadetAt);
+      const parsedUpdatedAt = new Date(responseBody.updated_at).toISOString();
+      expect(responseBody.updated_at).toEqual(parsedUpdatedAt);
 
       expect(responseBody.dependencies.database.version).toEqual("16.11");
       expect(responseBody.dependencies.database.max_connections).toEqual(100);
